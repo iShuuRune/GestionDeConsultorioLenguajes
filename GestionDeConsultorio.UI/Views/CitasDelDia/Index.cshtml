@@ -1,0 +1,75 @@
+﻿@model IEnumerable<GestionDeConsultorio.Model.Cita>
+
+@{
+    ViewData["Title"] = "Index";
+
+    var horarios = new List<DateTime> {
+        DateTime.Today.AddHours(9),
+        DateTime.Today.AddHours(10),
+        DateTime.Today.AddHours(11),
+        DateTime.Today.AddHours(12),
+        DateTime.Today.AddHours(13),
+        DateTime.Today.AddHours(14),
+        DateTime.Today.AddHours(15),
+        DateTime.Today.AddHours(16)
+    };
+}
+
+
+
+<h1>Citas del día</h1>
+<p>Fecha de hoy: @DateTime.Today.ToString("dd/MM/yyyy")</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Horario</th>
+            <th>Paciente</th>
+            <th>Acciones</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var horario in horarios)
+        {
+            var cita = Model.FirstOrDefault(c => c.HoraDeEntrada == horario.TimeOfDay);
+
+            <tr>
+                <td>@horario.ToString("hh:mm tt")</td>
+                <td>
+                    @if (cita != null)
+                    {
+                        @cita.NombrePaciente
+                    }
+                    else if (horario.Hour == 12)
+                    {
+                        <span>ALMUERZO</span>
+                    }
+                    else
+                    {
+                        <span>Libre</span>
+                    }
+                </td>
+                <td>
+                    @if (cita != null)
+                    {
+                        @if (cita.Estado == GestionDeConsultorio.Model.Estado.Atendida ||
+                             cita.Estado == GestionDeConsultorio.Model.Estado.Cancelado)
+                        {
+                            @Html.DisplayFor(modelItem => cita.Estado)
+                        } 
+                        else
+                        {
+
+                        @Html.ActionLink("Iniciar", "Iniciar", new { id = cita.Id }, new { @class = "btn btn-outline-success" })
+                        <span>/</span>
+                        @Html.ActionLink("Cancelar", "Cancelar", new { id = cita.Id }, new { @class = "btn btn-outline-danger" })
+                        }
+                    }
+                </td>
+            </tr>
+        }
+
+
+    </tbody>
+</table>

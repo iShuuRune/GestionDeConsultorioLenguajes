@@ -1,0 +1,84 @@
+﻿@model IEnumerable<GestionDeConsultorio.Model.Cita>
+
+@{
+    ViewData["Title"] = "Registro";
+}
+
+<h1>Registro de Citas</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Añadir Cita</a>
+</p>
+
+<form asp-controller="Citas" asp-action="Index" method="get">
+
+    <p>
+        Nombre: <input type="text" name="nombre" />
+        <input type="submit" value="Filtrar" />
+    </p>
+
+</form>
+
+
+<table class="table">
+    <thead>
+        <tr>
+
+            <th>
+                @Html.DisplayNameFor(model => model.IdentificacionPaciente)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NombrePaciente)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MotivoDeLaCita)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FechaDeEntrada)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FechaDeSalida)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Estado)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdentificacionPaciente)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NombrePaciente)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MotivoDeLaCita)
+            </td>
+            <td>
+                    @Html.DisplayFor(modelItem => item.FechaDeEntradaFormato)
+            </td>
+            <td>
+                    @Html.DisplayFor(modelItem => item.FechaDeSalidaFormato)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Estado)
+            </td>
+
+            <td>
+
+                @if(item.Estado == GestionDeConsultorio.Model.Estado.Registrada)
+                {
+
+                        @Html.ActionLink("Editar", "Edit", new { id = item.Id }, new { @class = "btn btn-outline-info" })
+
+                }
+                
+
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

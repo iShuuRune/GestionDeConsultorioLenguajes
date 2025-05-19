@@ -1,0 +1,54 @@
+﻿@model GestionDeConsultorio.Model.NuevaCita
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Editar Cita</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="IdentificacionPaciente" class="control-label"></label>
+                <input asp-for="IdentificacionPaciente" class="form-control" />
+                <span asp-validation-for="IdentificacionPaciente" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NombrePaciente" class="control-label"></label>
+                <input asp-for="NombrePaciente" class="form-control" />
+                <span asp-validation-for="NombrePaciente" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MotivoDeLaCita" class="control-label"></label>
+                <input asp-for="MotivoDeLaCita" class="form-control" />
+                <span asp-validation-for="MotivoDeLaCita" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FechaCita" class="control-label"></label>
+                <input asp-for="FechaCita" class="form-control" />
+                <span asp-validation-for="FechaCita" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Hora" class="control-label"></label>
+                <select asp-for="Hora" asp-items="Html.GetEnumSelectList<GestionDeConsultorio.Model.Horarios>()" class="form-control">
+                </select>
+                <span asp-validation-for="Hora" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Guardar" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <br>
+    <a asp-action="Index" class="btn btn-secondary">Volver a la lista</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
